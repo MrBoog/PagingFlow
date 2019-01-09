@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "PagingFlow"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "A Page View base on UIPageViewController."
   s.description  = <<-DESC
                    Easily setup and manage a list of UIViewController by using UIPageViewController.

@@ -1,0 +1,21 @@
+PODS:
+  - PagingFlow (0.0.2)
+
+DEPENDENCIES:
+  - PagingFlow (from `https://github.com/MrBoog/PagingFlow.git`)
+
+EXTERNAL SOURCES:
+  PagingFlow:
+    :git: https://github.com/MrBoog/PagingFlow.git
+
+CHECKOUT OPTIONS:
+  PagingFlow:
+    :commit: 67d9e893864a86bc8f6a1f1bbab01970fa7e21b2
+    :git: https://github.com/MrBoog/PagingFlow.git
+
+SPEC CHECKSUMS:
+  PagingFlow: b556b2ab37049fa6560eeadd17da401b39f56261
+
+PODFILE CHECKSUM: d338612333fbe2bf17564dfb6910e01c738c930a
+
+COCOAPODS: 1.5.3

@@ -9,7 +9,9 @@
 import UIKit
 
 public protocol PagingFlowViewControllerDelegate: NSObjectProtocol {
-    func pageViewControllerChangingAmongTransition(_ progress: CGFloat)
+    func pageViewController(_ pagingViewController: PagingFlowViewController,
+                            changingAmongTransition progress: CGFloat)
+    func pageViewControllerDidChange(_ pagingViewController: PagingFlowViewController)
 }
 
 public protocol PagingFlowViewControllerDataSource: NSObjectProtocol {
@@ -78,6 +80,9 @@ extension PagingFlowViewController {
         pageViewController.dataSource = self
 
         viewControllers = dataSource?.viewControllers(in: self) ?? []
+        if let vc = viewControllers.first {
+            goToViewController(viewController: vc, animation: false)
+        }
     }
     
     public func currentActiveViewController() -> UIViewController? {
@@ -108,7 +113,20 @@ extension PagingFlowViewController {
         pageViewController.dataSource = self
     }
     
+    // Return true if removed success.
+    @discardableResult
+    private func emptyPagingViewControllerIfNeeded() -> Bool {
+        // Because PagingVC has cache inside itself,
+        // so try to empty it when no more viewControllers here.
+        if viewControllers.count == 0 {
+            pageViewController.setViewControllers([UIViewController()], direction: .forward, animated: false, completion: nil)
+            return true
+        }
+        return false
+    }
+    
     private func activeViewControllerChanged() {
+        delegate?.pageViewControllerDidChange(self)
     }
     
     private func viewController(at index: Int) -> UIViewController? {
@@ -177,7 +195,7 @@ extension PagingFlowViewController: UIScrollViewDelegate {
                 let currentDraggingOffset = scrollView.contentOffset
                 let delta = -(offset.x - currentDraggingOffset.x)
                 let progress = delta / scrollView.frame.width
-                delegate?.pageViewControllerChangingAmongTransition(progress)
+                delegate?.pageViewController(self, changingAmongTransition: progress)
             }
         }
     }
